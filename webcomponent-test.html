@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Webcomponent Test</title>
+  <script id="custom-elements-es5-adapter-loader">
+    if (window.customElements) {
+      var src, currTag, script;
+      src = '//gotw-int.uefa.com/js/custom-elements-es5-adapter.js';
+      currTag = document.getElementById('custom-elements-es5-adapter-loader');
+      script = document.createElement('script');
+      script.src = src;
+      currTag.parentNode.insertBefore(script, currTag.nextSibling);
+    }
+  </script>
+  <script async type="text/javascript" src="//gotw-int.uefa.com/js/webcomponents-loader.js"></script>
+  <!-- <link async rel="import" href="//gotw-int.uefa.com/static.card.html"> -->
+  <script async type="text/javascript" src="//gotw-int.uefa.com/static/js/static.card.js"></script>
+  <style>
+    .gotw-card-container-small-small-square {
+      width: 204px;
+      height: 204px;
+      resize: both;
+      overflow: auto;
+    }
+
+    .gotw-card-container-small-square {
+      width: 249px;
+      height: 249px;
+      resize: both;
+      overflow: auto;
+    }
+
+    .gotw-card-container-square {
+      width: 375px;
+      height: 375px;
+      resize: both;
+      overflow: auto;
+    }
+
+    .gotw-card-container-wide {
+      width: 388px;
+      height: 184px;
+      resize: both;
+      overflow: auto;
+    }
+
+    .gotw-card-container-wide-big {
+      width: 476px;
+      height: 220px;
+      resize: both;
+      overflow: hidden;
+    }
+  </style>
+
+  <!-- <script>
+  let observer = new MutationObserver(function(mutations) {
+  console.log('mutations:', mutations);
+  var event = document.createEvent('HTMLEvents');
+  event.initEvent('resize', true, false);
+  window.dispatchEvent(event);
+});
+
+setTimeout(function(){
+  let child = document.querySelector(".gotw-card-container-small-square");
+  observer.observe(child, { attributes: true });
+}, 1000);
+</script> -->
+
+
+</head>
+
+<body>
+  <h3>STATIC CARD - SMALL SMALL SQUARE</h3>
+  <div class="gotw-card-container-small-small-square">
+    <gotw-static-card class="card"></gotw-static-card>
+  </div>
+  <h3>STATIC CARD - SMALL SQUARE</h3>
+  <div class="gotw-card-container-small-square">
+    <gotw-static-card class="card"></gotw-static-card>
+  </div>
+  <h3>STATIC CARD - SQUARE</h3>
+  <div class="gotw-card-container-square">
+    <gotw-static-card class="card"></gotw-static-card>
+  </div>
+  <h3>STATIC CARD - WIDE</h3>
+  <div class="gotw-card-container-wide">
+    <gotw-static-card class="card"></gotw-static-card>
+  </div>
+  <h3>STATIC CARD - WIDE BIG</h3>
+  <div class="gotw-card-container-wide-big">
+    <gotw-static-card class="card"></gotw-static-card>
+  </div>
+
+  <script>
+    const searchParams = new URL(window.location).searchParams;
+    const pollId = searchParams.get('pollId');
+    const language = searchParams.get('language') ?? 'en';
+    if (pollId) {
+      Array.from(document.querySelectorAll('.card')).forEach(e => {
+        e.setAttribute('pollId', pollId)
+        e.setAttribute('language', language)
+      });
+    }
+  </script>
+</body>
+
+</html>
