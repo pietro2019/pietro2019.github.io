@@ -1,0 +1,351 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Webcomponent Preview Page</title>
+
+  <script id="custom-elements-es5-adapter-loader">
+    if (window.customElements) {
+      var src, currTag, script;
+      src = '/js/custom-elements-es5-adapter.js';
+      currTag = document.getElementById('custom-elements-es5-adapter-loader');
+      script = document.createElement('script');
+      script.src = src;
+      currTag.parentNode.insertBefore(script, currTag.nextSibling);
+    }
+  </script>
+  <script type="text/javascript" src="/js/webcomponents-loader.js"></script>
+  <script defer type="text/javascript" src="/static/js/external.card.js"></script>
+  <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+  <style>
+    body {
+      font-family: Verdana, Geneva, Tahoma, sans-serif;
+    }
+
+    /* .resizable {
+      padding: 20px;
+      background-color: grey;
+    } */
+
+    h3 {
+      margin-bottom: 0px;
+    }
+
+    span {
+      font-size: 14px;
+      display: block;
+    }
+
+    .potw-card-container {
+      width: 970px;
+      min-width: 250px;
+      height: 250px;
+      min-height: 200px;
+      resize: both;
+      overflow: auto;
+      /* border: 1px solid #000; */
+    }
+
+    .form-control#disable-tracking {
+      display: inline-block;
+      width: auto;
+    }
+
+    .form-control__label {
+      display: inline-block;
+      vertical-align: text-bottom;
+      cursor: pointer;
+    }
+
+    .row {
+      padding-top: 30px;
+    }
+  </style>
+
+  <script>
+    setTimeout(function () {
+      let observer = new MutationObserver(function (mutations) {
+        var event = document.createEvent('HTMLEvents');
+        event.initEvent('resize', true, false);
+        window.dispatchEvent(event);
+      });
+
+      let elements = document.getElementsByClassName("resizable");
+
+      Object.keys(elements).forEach(function (key) {
+        observer.observe(elements[key], { attributes: true });
+      });
+    }, 1000);
+  </script>
+</head>
+
+<body>
+  <h1>POTW CARD PREVIEW</h1>
+
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-12 col-md-3">
+        <form>
+          <div class="form-group">
+            <select class="form-control" id="pollId" name="pollId">
+            </select>
+          </div>
+          <div class="form-group">
+            <select class="form-control" id="nomineeId" name="nomineeId">
+            </select>
+          </div>
+          <div class="form-group">
+            <input class="form-control" type="checkbox" id="disable-tracking" name="disable-tracking" />
+            <label class="form-control__label" for="disable-tracking">disable tracking</label>
+          </div>
+
+          <div class="form-group">
+            <select class="form-control" id="language" name="language">
+              <option value="en">English</option>
+              <option value="fr">Français</option>
+              <option value="de">Deutsch</option>
+              <option value="ru">Русский</option>
+              <option value="es">Español</option>
+              <option value="it">Italiano</option>
+              <option value="pt">Português</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <input type="number" class="form-control" id="width" name="width" placeholder="970">
+          </div>
+
+          <div class="form-group">
+            <input type="number" class="form-control" id="height" name="height" placeholder="250">
+          </div>
+
+          <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+      </div>
+
+      <div class="col-12 col-md-9">
+        <div class="potw-card-container resizable" id="test-card">
+        </div>
+      </div>
+
+    </div>
+
+    <div class="row">
+      <div class="col-12">
+        <div class="parameters">
+          <h2>Parameters</h2>
+          <div>
+            <span><strong>pollId</strong> (default -> current)</span>
+            <span><strong>nomineeId</strong> (default -> null)</span>
+            <span><strong>language</strong> (default -> en)</span>
+            <span><strong>disable-tracking</strong> (default -> false)</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-12">
+        <div class="sizes">
+          <h2>Sizes</h2>
+          <div>
+            <strong>The widget takes the dimensions of its container.</strong>
+          </div>
+          <div>
+            <div>To preview the widget in this page you can set width and height in the form.<br><br></div>
+            <span>width (default: 970px)
+              (for example: <a href="/widgets-preview.html?width=300">?width=300</a>)
+            </span>
+
+            <span>height (default: 250px)
+              (for example: <a href="/widgets-preview.html?height=600">?height=600</a>)
+            </span>
+
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-12">
+        <h2>How to include</h2>
+        The widget (web component) is exposed currently here: https://uclpotw.uefa.com/static/js/external.card.js
+        <br>
+        can be included like this:<br><br>
+        <em>in header:</em>
+        <code>
+          <pre>
+              &lt;script async type="text/javascript" src="https://uclpotw.uefa.com/static/js/external.card.js">&lt;/script>
+          </pre>
+        </code>
+        <em>in page:</em>
+        <code>
+          <pre>
+            &lt;potw-card pollId="5bbf21250462600b6bb05f30" nomineeId="5bbf21290462600b6bb05f31" disable-tracking="true" >&lt;/potw-card&gt;
+            (<strong>pollId</strong> and <strong>nomineeId</strong> are optional)
+            (<strong>disable-tracking</strong> is optional and avoid the injection of Uefa GTM javascript in page)
+          </pre>
+        </code>
+        You have also to include webcomponents polyfill:
+        <pre><code>
+          &lt;script id="custom-elements-es5-adapter-loader"&gt;
+            if (window.customElements) {
+              var src, currTag, script;
+              src = 'https://cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/1.2.7/custom-elements-es5-adapter.js';
+              currTag = document.getElementById('custom-elements-es5-adapter-loader';
+              script = document.createElement('script');
+              script.src = src;
+              currTag.parentNode.insertBefore(script, currTag.nextSibling);
+            }
+          &lt;/script&gt;
+
+          &lt;script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/1.2.7/webcomponents-loader.js"&gt;&lt;/script&gt;
+        </code></pre>
+        (you can replace "https://cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/1.2.7/" with a path of your site but on
+        the same path you need to have all the webcomponents-*.js files)
+        <br>
+        Reference here: <a target="_blank"
+          href="https://github.com/webcomponents/webcomponentsjs/tree/v1">https://github.com/webcomponents/webcomponentsjs/tree/v1
+        </a> (polyfill must be V1)
+        <br><br>
+      </div>
+    </div>
+  </div>
+
+
+  <script>
+    function getQs(paramName) {
+      var qsMatch = window.location.search.match(new RegExp(paramName + '=([^&]*)'));
+      return qsMatch ? qsMatch[1] : '';
+    }
+
+    const pollId = getQs('pollId');
+    const nomineeId = getQs('nomineeId');
+    const disableTracking = !!getQs('disable-tracking');
+    const type = getQs('type');
+    const language = getQs('language');
+
+    const width = getQs('width');
+    const height = getQs('height');
+
+    const potwCard = document.createElement('potw-card');
+    if (pollId) {
+      potwCard.setAttribute("pollId", pollId);
+    }
+    if (nomineeId) {
+      potwCard.setAttribute("nomineeId", nomineeId);
+      document.getElementById("nomineeId").value = nomineeId;
+    }
+    if (disableTracking) {
+      potwCard.setAttribute("disable-tracking", disableTracking);
+      document.getElementById("disable-tracking").checked = disableTracking;
+    }
+    if (type) potwCard.setAttribute("type", type);
+
+    if (language) {
+      potwCard.setAttribute("language", language);
+      document.getElementById("language").value = language;
+    }
+
+    const potwCardParent = document.querySelector(".potw-card-container");
+    let style = "";
+    if (width) {
+      style += "width: " + width + "px; ";
+      document.getElementById("width").value = width;
+    }
+
+    if (height) {
+      style += "height: " + height + "px;";
+      document.getElementById("height").value = height;
+    }
+
+    potwCardParent.setAttribute("style", style);
+    document.getElementById("test-card").appendChild(potwCard);
+
+    var host = window.location.hostname;
+    String.prototype.includes = function (str) {
+      return this.indexOf(str) >= 0;
+    }
+
+    let appEnv = 'prod';
+    if (host.includes('.uefa.com')) {
+      if (host.includes('-int') || host.includes('.stg.')) appEnv = "int";
+      else if (host.includes('-pre') || host.includes('.gold.')) appEnv = "pre";
+    }
+    if (host === 'localhost') appEnv = "int";
+
+    const apiUrl = {
+      "prod": "https://poll.uefa.com",
+      "int": "https://poll-int.uefa.com",
+      "pre": "https://poll-pre.uefa.com"
+    };
+
+    function fetchPoll() {
+      var data = null;
+      var xhr = new XMLHttpRequest();
+
+      xhr.addEventListener("readystatechange", function () {
+        if (this.readyState === 4) {
+          const response = this.responseText;
+          const data = JSON.parse(response);
+
+          const polls = data.data.map(function (poll) {
+            return {
+              title: poll.title,
+              id: poll.id,
+              status: poll.status,
+              nominees: poll.nominees,
+            };
+          });
+
+          const selectPoll = document.getElementById("pollId");
+          const selectNominee = document.getElementById("nomineeId");
+
+          polls.forEach(function (poll) {
+            var option = document.createElement("option");
+            option.text = poll.title + " - " + poll.status;
+            option.value = poll.id;
+            if (pollId === poll.id) {
+              option.selected = true;
+            }
+            selectPoll.add(option);
+          });
+
+
+          selectPoll.addEventListener("change", updateNominees);
+          updateNominees();
+
+          function updateNominees() {
+            selectNominee.innerHTML = "";
+
+            var selectedPoll = selectPoll.value;
+            var nomineesSelectedPoll = polls.filter(function (poll) {
+              return poll.id === selectPoll.value;
+            });
+
+            nomineesSelectedPoll[0].nominees.forEach(function (nominee) {
+              var option = document.createElement("option");
+              option.text = nominee.id;
+              option.value = nominee.id;
+              if (nomineeId === nominee.id) {
+                option.selected = true;
+              }
+              selectNominee.add(option);
+            });
+          };
+        }
+      });
+
+      xhr.open("GET", apiUrl[appEnv] + "/v1/polls?offset=0&limit=10&types=POTW");
+      //xhr.setRequestHeader("cache-control", "no-cache");
+      xhr.send(data);
+    };
+
+    fetchPoll();
+
+  </script>
+
+</body>
+
+</html>
