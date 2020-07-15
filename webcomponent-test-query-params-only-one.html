@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Webcomponent Test</title>
+  <script>
+    function addScript(src) {
+      var script;
+      script = document.createElement('script');
+      script.src = src;
+      document.head.appendChild(script);
+    }
+  </script>
+  <script id="custom-elements-es5-adapter-loader">
+    if (window.customElements) {
+      var src, currTag, script;
+      src = '/js/custom-elements-es5-adapter.js';
+      currTag = document.getElementById('custom-elements-es5-adapter-loader');
+      script = document.createElement('script');
+      script.src = src;
+      currTag.parentNode.insertBefore(script, currTag.nextSibling);
+    }
+  </script>
+  <script type="text/javascript" src="/js/webcomponents-loader.js"></script>
+
+  <script defer type="text/javascript" src="/static/js/external.card.js"></script>
+
+  <style>
+    body {
+      font-family: Verdana, Geneva, Tahoma, sans-serif;
+    }
+
+    .resizable {
+      padding: 0px;
+      background-color: grey;
+    }
+
+    h3 {
+      margin-bottom: 0px;
+    }
+
+    span {
+      font-size: 14px;
+    }
+
+    .potw-card-container {
+      width: 970px;
+      min-width: 250px;
+      height: 250px;
+      min-height: 200px;
+      resize: both;
+      overflow: auto;
+      border: 1px solid #000;
+    }
+
+    #height,
+    #width {
+      margin-bottom: 20px;
+    }
+  </style>
+
+  <script>
+    setTimeout(function () {
+      let observer = new MutationObserver(function (mutations) {
+        //console.log('mutations:', mutations);
+        var event = document.createEvent('HTMLEvents');
+        event.initEvent('resize', true, false);
+        window.dispatchEvent(event);
+      });
+
+      let elements = document.getElementsByClassName("resizable");
+
+      Object.keys(elements).forEach(function (key) {
+        //console.log(key, elements[key]);
+        observer.observe(elements[key], { attributes: true });
+      });
+    }, 1000);
+  </script>
+</head>
+
+<body>
+  <h3>POTW CARD TEST</h3>
+  <span>(you can set pollId and nomineeId via query params to url)</span>
+  <div id="width"></div>
+  <div id="height"></div>
+
+  <div id="test-card" style="display: flex; flex-direction: row; flex-wrap: wrap;">
+  </div>
+
+  <script>
+    function getQs(paramName) {
+      var qsMatch = window.location.search.match(new RegExp(paramName + '=([^&]*)'));
+      return qsMatch ? qsMatch[1] : '';
+    }
+    var pollId = getQs('pollId');
+    var nomineeId = getQs('nomineeId');
+    var type = getQs('type');
+
+    var dimensions = [
+      { width: "300px", height: "300px" },
+      // { width: "350px", height: "350px" },
+      // { width: "375px", height: "375px" },
+      // { width: "375px", height: "400px" },
+      // { width: "375px", height: "600px" },
+      // { width: "300px", height: "600px" },
+      // { width: "440px", height: "350px" },
+      // { width: "432px", height: "200px" },
+      // { width: "920px", height: "250px" },
+      // { width: "720px", height: "480px" },
+      // { width: "970px", height: "250px" }
+    ];
+
+    setTimeout(function () {
+      dimensions.forEach(function (e) {
+        const potwCardContainer = document.createElement('div');
+        let potwCard = document.createElement('potw-card');
+
+        potwCardContainer.className = "potw-card-container resizable no-padding";
+        potwCardContainer.style.marginRight = "30px";
+        potwCardContainer.style.marginBottom = "30px";
+        potwCardContainer.style.width = e.width;
+        potwCardContainer.style.height = e.height;
+
+        potwCard.setAttribute("pollId", pollId);
+        if (nomineeId) potwCard.setAttribute("nomineeId", nomineeId);
+        if (type) potwCard.setAttribute("type", type);
+
+        potwCardContainer.appendChild(potwCard);
+        document.getElementById("test-card").appendChild(potwCardContainer);
+      });
+    }, 1500);
+  </script>
+
+</body>
+
+</html>
