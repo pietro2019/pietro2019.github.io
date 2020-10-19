@@ -268,7 +268,7 @@
       return this.indexOf(str) >= 0;
     }
 
-    let appEnv = 'prod';
+    let appEnv = 'int';
     if (host.includes('.uefa.com')) {
       if (host.includes('-int') || host.includes('.stg.')) appEnv = "int";
       else if (host.includes('-pre') || host.includes('.gold.')) appEnv = "pre";
