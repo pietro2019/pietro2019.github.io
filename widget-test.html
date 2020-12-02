@@ -1,6 +1,31 @@
-<html>
-<body>
+<!doctype html>
+<html lang="en">
 
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>External Widget Tacking Test Page (EWTTP)</title>
+
+  <script id="custom-elements-es5-adapter-loader">
+    if (window.customElements) {
+      var src, currTag, script;
+      src = '//uclpotw.uefa.com/js/custom-elements-es5-adapter.js';
+      currTag = document.getElementById('custom-elements-es5-adapter-loader');
+      script = document.createElement('script');
+      script.src = src;
+      currTag.parentNode.insertBefore(script, currTag.nextSibling);
+    }
+  </script>
+  <script type="text/javascript" src="//uclpotw-int.uefa.com/js/webcomponents-loader.js"></script>
+  <script defer type="text/javascript" src="//uclpotw-int.uefa.com/static/js/external.card.js"></script>
+
+</head>
+
+<body>
+  <h1>POTW CARD PREVIEW</h1>
+
+  <potw-card></potw-card>
 
 </body>
+
 </html>
