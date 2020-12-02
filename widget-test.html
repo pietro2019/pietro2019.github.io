@@ -57,7 +57,83 @@
 
 </head>
 <body>
-  <h1>POTW CARD PREVIEW</h1>
+  
+  <script>
+
+    let appEnv = 'int';
+
+    const apiUrl = {
+      "prod": "https://poll.uefa.com",
+      "int": "https://poll-int.uefa.com",
+      "pre": "https://poll-pre.uefa.com"
+    };
+
+    function fetchPoll() {
+      var data = null;
+      var xhr = new XMLHttpRequest();
+
+      xhr.addEventListener("readystatechange", function () {
+        if (this.readyState === 4) {
+          const response = this.responseText;
+          const data = JSON.parse(response);
+
+          const polls = data.data.map(function (poll) {
+            return {
+              title: poll.title,
+              id: poll.id,
+              status: poll.status,
+              nominees: poll.nominees,
+            };
+          });
+
+          const selectPoll = document.getElementById("pollId");
+          const selectNominee = document.getElementById("nomineeId");
+
+          polls.forEach(function (poll) {
+            var option = document.createElement("option");
+            option.text = poll.title + " - " + poll.status;
+            option.value = poll.id;
+            if (pollId === poll.id) {
+              option.selected = true;
+            }
+            selectPoll.add(option);
+          });
+
+
+          selectPoll.addEventListener("change", updateNominees);
+          updateNominees();
+
+          function updateNominees() {
+            selectNominee.innerHTML = "";
+
+            var selectedPoll = selectPoll.value;
+            var nomineesSelectedPoll = polls.filter(function (poll) {
+              return poll.id === selectPoll.value;
+            });
+
+            nomineesSelectedPoll[0].nominees.forEach(function (nominee) {
+              var option = document.createElement("option");
+              option.text = nominee.id;
+              option.value = nominee.id;
+              if (nomineeId === nominee.id) {
+                option.selected = true;
+              }
+              selectNominee.add(option);
+            });
+          };
+        }
+      });
+
+      xhr.open("GET", apiUrl[appEnv] + "/v1/polls?offset=0&limit=10&types=POTW");
+      //xhr.setRequestHeader("cache-control", "no-cache");
+      xhr.send(data);
+    };
+
+    fetchPoll();
+
+  </script>
+  
+  <h1>POTW WIDGET CARD</h1>
   <div class="potw-card-container resizable">
     <potw-card pollId="5fc6607a6ec1f92312ba56cf"></potw-card>
   </div>
