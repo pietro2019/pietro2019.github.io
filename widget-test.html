@@ -59,7 +59,8 @@
 <body>
   
   <script>
-
+    const pollId = document.getElementById('test-card').getAttribute('pollId');
+    alert(pollId);
     let appEnv = 'int';
 
     const apiUrl = {
@@ -135,7 +136,7 @@
   
   <h1>POTW WIDGET CARD</h1>
   <div class="potw-card-container resizable">
-    <potw-card pollId="5fc6607a6ec1f92312ba56cf"></potw-card>
+    <potw-card id="test-card" pollId="5fc6607a6ec1f92312ba56cf"></potw-card>
   </div>
 </body>
 </html>
