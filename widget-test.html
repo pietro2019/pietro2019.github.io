@@ -62,6 +62,12 @@
     const pollId = "5fc6607a6ec1f92312ba56cf";
     let appEnv = 'int';
 
+    const potwCard = document.createElement('potw-card');
+    potwCard.setAttribute("pollId", pollId);
+
+    const potwCardParent = document.querySelector(".potw-card-container");
+    document.getElementById("test-card").appendChild(potwCard);
+    
     const apiUrl = {
       "prod": "https://poll.uefa.com",
       "int": "https://poll-int.uefa.com",
@@ -98,29 +104,6 @@
             }
             selectPoll.add(option);
           });
-
-
-          selectPoll.addEventListener("change", updateNominees);
-          updateNominees();
-
-          function updateNominees() {
-            selectNominee.innerHTML = "";
-
-            var selectedPoll = selectPoll.value;
-            var nomineesSelectedPoll = polls.filter(function (poll) {
-              return poll.id === selectPoll.value;
-            });
-
-            nomineesSelectedPoll[0].nominees.forEach(function (nominee) {
-              var option = document.createElement("option");
-              option.text = nominee.id;
-              option.value = nominee.id;
-              if (nomineeId === nominee.id) {
-                option.selected = true;
-              }
-              selectNominee.add(option);
-            });
-          };
         }
       });
 
@@ -134,8 +117,6 @@
   </script>
   
   <h1>POTW WIDGET CARD</h1>
-  <div class="potw-card-container resizable">
-    <potw-card id="test-card" pollId="5fc6607a6ec1f92312ba56cf"></potw-card>
-  </div>
+<div class="potw-card-container resizable" id="test-card">
 </body>
 </html>
