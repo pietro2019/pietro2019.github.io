@@ -97,7 +97,7 @@
         }
       });
 
-      xhr.open("GET", apiUrl[appEnv] + "/v1/polls?offset=0&limit=10&types=POTW");
+      xhr.open("GET", apiUrl[appEnv] + "/v1/polls/" + pollId);
       //xhr.setRequestHeader("cache-control", "no-cache");
       xhr.send(data);
     };
