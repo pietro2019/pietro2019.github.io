@@ -94,19 +94,6 @@
               nominees: poll.nominees,
             };
           });
-
-          const selectPoll = document.getElementById("pollId");
-          const selectNominee = document.getElementById("nomineeId");
-
-          polls.forEach(function (poll) {
-            var option = document.createElement("option");
-            option.text = poll.title + " - " + poll.status;
-            option.value = poll.id;
-            if (pollId === poll.id) {
-              option.selected = true;
-            }
-            selectPoll.add(option);
-          });
         }
       });
 
