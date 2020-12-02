@@ -5,6 +5,42 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>External Widget Tacking Test Page (EWTTP)</title>
 
+   <style>
+    body {
+      font-family: Verdana, Geneva, Tahoma, sans-serif;
+    }
+
+    span {
+      font-size: 14px;
+      display: block;
+    }
+
+    .potw-card-container {
+      width: 970px;
+      min-width: 250px;
+      height: 250px;
+      min-height: 200px;
+      resize: both;
+      overflow: auto;
+      /* border: 1px solid #000; */
+    }
+
+    .form-control#disable-tracking {
+      display: inline-block;
+      width: auto;
+    }
+
+    .form-control__label {
+      display: inline-block;
+      vertical-align: text-bottom;
+      cursor: pointer;
+    }
+
+    .row {
+      padding-top: 30px;
+    }
+  </style>
+  
   <script id="custom-elements-es5-adapter-loader">
     if (window.customElements) {
       var src, currTag, script;
@@ -22,6 +58,8 @@
 </head>
 <body>
   <h1>POTW CARD PREVIEW</h1>
-  <potw-card></potw-card>
+  <div class="potw-card-container resizable">
+    <potw-card></potw-card>
+  </div>
 </body>
 </html>
