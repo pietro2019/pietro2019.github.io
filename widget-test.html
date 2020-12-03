@@ -10,34 +10,14 @@
       font-family: Verdana, Geneva, Tahoma, sans-serif;
     }
 
-    span {
-      font-size: 14px;
-      display: block;
-    }
 
     .potw-card-container {
-      width: 970px;
+      width: 800px;
       min-width: 250px;
       height: 250px;
       min-height: 200px;
       resize: both;
       overflow: auto;
-      /* border: 1px solid #000; */
-    }
-
-    .form-control#disable-tracking {
-      display: inline-block;
-      width: auto;
-    }
-
-    .form-control__label {
-      display: inline-block;
-      vertical-align: text-bottom;
-      cursor: pointer;
-    }
-
-    .row {
-      padding-top: 30px;
     }
   </style>
   
@@ -59,15 +39,14 @@
 <body>  
   
   <h1>POTW WIDGET CARD</h1>
-<div class="potw-card-container resizable" id="test-card">
+    <div class="potw-card-container resizable" id="test-card">
 
     <script>
     const pollId = "5fc6607a6ec1f92312ba56cf";
-    let appEnv = 'int';
+    const appEnv = 'int';
 
     const potwCard = document.createElement('potw-card');
     potwCard.setAttribute("pollId", pollId);
-
     const potwCardParent = document.querySelector(".potw-card-container");
     document.getElementById("test-card").appendChild(potwCard);
     
